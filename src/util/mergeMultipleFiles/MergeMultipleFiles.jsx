@@ -4,6 +4,11 @@ import style from './MergeMutipleFiles.module.css'
 const MergeMultipleFiles = props => {
   const files = props.files
   let finalHTML
+  let passed = 0
+  let skipped = 0
+  let retried = 0
+  let failed = 0
+  let time = 0
 
   function readFile (file) {
     return new Promise((resolve, reject) => {
@@ -46,6 +51,9 @@ const MergeMultipleFiles = props => {
       const parser = new DOMParser()
       const doc = parser.parseFromString(combinedContent, 'text/html')
       const elementsWithNumClass = doc.querySelectorAll('[class*="num"]')
+      doc.querySelectorAll('[class*="num"]').forEach(element => {
+        element.parentNode.removeChild(element)
+      })
 
       if (elementsWithNumClass.length > 0) {
         const table = document.createElement('table')
@@ -73,24 +81,62 @@ const MergeMultipleFiles = props => {
 
         let count = 0
         let row
+        let result = []
+        elementsWithNumClass.forEach((element, index) => {
+          var textContent = element.textContent || element.innerText
+          var value = parseInt(textContent.replace(/,/g, ''), 10)
+          // eslint-disable-next-line default-case
+          switch (index % 5) {
+            case 0:
+              passed += value
+              break
+            case 1:
+              skipped += value
+              break
+            case 2:
+              retried += value
+              break
+            case 3:
+              failed += value
+              break
+            case 4:
+              console.log(textContent)
+              time += value
+              break
+          }
+        })
 
-        elementsWithNumClass.forEach(element => {
+        //logic to make failed to zero
+        passed += failed
+        failed = 0
+
+        result.push(passed)
+        result.push(skipped)
+        result.push(retried)
+        result.push(failed)
+        result.push(time)
+
+        result.forEach(element => {
+          console.log(element)
           if (count % 5 === 0) {
             row = document.createElement('tr')
             tbody.appendChild(row)
           }
           const td = document.createElement('td')
-          td.textContent = element.textContent
+          td.textContent = element
           row.appendChild(td)
-
           count++
         })
+        // console.log('Passed', passed)
+        // console.log('skipped', skipped)
+        // console.log('retried', retried)
+        // console.log('failed', failed)
+        // console.log('Time', time)
 
         table.appendChild(tbody)
         const tableHTML = table.outerHTML
-        finalHTML = `${tableHTML}+ \n ${combinedContent}`
+        finalHTML = `${tableHTML} \n ${combinedContent}`
 
-        //
         const tempDiv = document.createElement('div')
 
         tempDiv.innerHTML = finalHTML
@@ -103,7 +149,6 @@ const MergeMultipleFiles = props => {
           'result',
           'totop'
         ]
-
         classesToRemove.forEach(classToRemove => {
           tempDiv.querySelectorAll(`.${classToRemove}`).forEach(element => {
             element.parentNode.removeChild(element)
@@ -129,9 +174,13 @@ const MergeMultipleFiles = props => {
 
   return (
     <div className={style.MergeFiles}>
-      <button onClick={combineHTMLFilesAndDownload} className={style.Button}>
-        Download Combined HTML
-      </button>
+      {!files ? (
+        <button onClick={combineHTMLFilesAndDownload} className={style.Button}>
+          Download Combined HTML
+        </button>
+      ) : (
+        <></>
+      )}
     </div>
   )
 }
