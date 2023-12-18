@@ -107,8 +107,8 @@ const MergeMultipleFiles = props => {
         })
 
         //logic to make failed to zero
-        passed += failed
-        failed = 0
+        // passed += failed
+        // failed = 0
 
         result.push(passed)
         result.push(skipped)
