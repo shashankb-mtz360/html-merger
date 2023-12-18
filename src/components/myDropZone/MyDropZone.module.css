@@ -1,0 +1,45 @@
+.dropzone {
+  margin: auto;
+  width: 600px;
+  min-height: 200px;
+  border: 2px dashed #cccccc;
+  border-radius: 4px;
+  padding: 20px;
+  align-items: center;
+  text-align: center;
+  background-color: #f8f8f8;
+  margin-bottom: 20px;
+}
+.Input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15%;
+}
+
+.uploadBox {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.fileName {
+  margin: 2px;
+  font-size: small;
+  width: 10px;
+}
+
+.AddButton {
+  margin-top: 12px;
+  width: 60px;
+  height: 70px;
+}

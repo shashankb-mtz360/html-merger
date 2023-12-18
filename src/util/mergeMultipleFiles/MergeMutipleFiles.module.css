@@ -1,0 +1,23 @@
+.MergeFiles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Button {
+  height: 35px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 25px;
+  background-color: rgb(72, 154, 202);
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgb(45, 97, 165);
+  }
+}

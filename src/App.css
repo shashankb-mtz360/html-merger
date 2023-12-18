@@ -1,0 +1,59 @@
+/* .App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+} */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.App-header {
+}
+
+h1 {
+  margin: 0;
+}
+
+main {
+  margin-top: 20px;
+}
+
+.myDropzone {
+  border: 2px dashed #bbb;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #f8f8f8;
+}
+
+.uploadBox {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.fileName {
+  margin-left: 10px;
+}
+
+/* Styles for MergeMultipleFiles component */
+/* Add styles as needed for the MergeMultipleFiles component */
