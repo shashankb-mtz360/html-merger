@@ -171,15 +171,12 @@ const MergeMultipleFiles = props => {
       console.error('Error reading file:', error)
     }
   }
-
   return (
     <div className={style.MergeFiles}>
-      {!files ? (
+      {files && files.length > 0 && (
         <button onClick={combineHTMLFilesAndDownload} className={style.Button}>
           Download Combined HTML
         </button>
-      ) : (
-        <></>
       )}
     </div>
   )
