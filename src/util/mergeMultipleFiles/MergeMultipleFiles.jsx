@@ -13,6 +13,25 @@ const MergeMultipleFiles = props => {
       reader.readAsText(file)
     })
   }
+  function removeLineWithNoClassOrId (combinedContent) {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(combinedContent, 'text/html')
+    const tablesWithoutClass = doc.querySelectorAll('table:not([class])')
+
+    tablesWithoutClass.forEach(table => {
+      table.querySelectorAll('tr').forEach(row => {
+        const rowData = row.textContent
+        if (
+          rowData.includes('Regression Test — failed') ||
+          rowData.includes('Regression Test — retried')
+        ) {
+          row.parentNode.removeChild(row)
+        }
+      })
+    })
+
+    return doc.documentElement.outerHTML
+  }
 
   // Function to combine the contents of multiple HTML files
   async function combineHTMLFilesAndDownload () {
@@ -20,7 +39,7 @@ const MergeMultipleFiles = props => {
       const fileContents = await Promise.all(files.map(readFile))
       let combinedContent = fileContents.join('\n')
 
-      // Replace color #F33 with #FFFF
+      // Replace color red to white
       combinedContent = combinedContent.replace(/#F33/g, '#FFFF')
       combinedContent = combinedContent.replace(/#D00/g, '#FFFF')
 
@@ -71,7 +90,9 @@ const MergeMultipleFiles = props => {
         const tableHTML = table.outerHTML
         finalHTML = `${tableHTML}+ \n ${combinedContent}`
 
+        //
         const tempDiv = document.createElement('div')
+
         tempDiv.innerHTML = finalHTML
         const classesToRemove = [
           'stacktrace',
@@ -79,7 +100,8 @@ const MergeMultipleFiles = props => {
           'failedodd',
           'retriedodd',
           'retriedeven',
-          'result'
+          'result',
+          'totop'
         ]
 
         classesToRemove.forEach(classToRemove => {
@@ -88,7 +110,7 @@ const MergeMultipleFiles = props => {
           })
         })
 
-        finalHTML = tempDiv.innerHTML
+        finalHTML = removeLineWithNoClassOrId(tempDiv.innerHTML)
       } else {
         finalHTML = combinedContent
       }
