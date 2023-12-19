@@ -45,8 +45,8 @@ const MergeMultipleFiles = props => {
       let combinedContent = fileContents.join('\n')
 
       // Replace color red to white
-      combinedContent = combinedContent.replace(/#F33/g, '#FFFF')
-      combinedContent = combinedContent.replace(/#D00/g, '#FFFF')
+      // combinedContent = combinedContent.replace(/#F33/g, '#FFFF')
+      // combinedContent = combinedContent.replace(/#D00/g, '#FFFF')
 
       const parser = new DOMParser()
       const doc = parser.parseFromString(combinedContent, 'text/html')
@@ -68,7 +68,7 @@ const MergeMultipleFiles = props => {
           '# Skipped',
           '# Retried',
           '# Failed',
-          'Time (ms)'
+          '#Time (ms)'
         ]
 
         const headerRow = document.createElement('tr')
@@ -109,8 +109,8 @@ const MergeMultipleFiles = props => {
         })
 
         //logic to make failed to zero
-        passed += failed
-        failed = 0
+        // passed += failed
+        // failed = 0
         result.push('Regression Test')
         result.push(passed)
         result.push(skipped)
@@ -143,13 +143,13 @@ const MergeMultipleFiles = props => {
 
         tempDiv.innerHTML = finalHTML
         const classesToRemove = [
-          'stacktrace',
-          'failedeven',
-          'failedodd',
-          'retriedodd',
-          'retriedeven',
-          'result',
-          'totop'
+          // 'stacktrace',
+          // 'failedeven',
+          // 'failedodd',
+          // 'retriedodd',
+          // 'retriedeven',
+          // 'result',
+          // 'totop'
         ]
         classesToRemove.forEach(classToRemove => {
           tempDiv.querySelectorAll(`.${classToRemove}`).forEach(element => {
