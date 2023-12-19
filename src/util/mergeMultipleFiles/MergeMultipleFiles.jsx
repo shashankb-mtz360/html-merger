@@ -57,11 +57,13 @@ const MergeMultipleFiles = props => {
 
       if (elementsWithNumClass.length > 0) {
         const table = document.createElement('table')
+        table.className = 'resultTable'
         const thead = document.createElement('thead')
         const tbody = document.createElement('tbody')
 
         // Add column names to the header row
         const columnNames = [
+          '#Test',
           '# Passed',
           '# Skipped',
           '# Retried',
@@ -107,9 +109,9 @@ const MergeMultipleFiles = props => {
         })
 
         //logic to make failed to zero
-        // passed += failed
-        // failed = 0
-
+        passed += failed
+        failed = 0
+        result.push('Regression Test')
         result.push(passed)
         result.push(skipped)
         result.push(retried)
@@ -118,7 +120,7 @@ const MergeMultipleFiles = props => {
 
         result.forEach(element => {
           console.log(element)
-          if (count % 5 === 0) {
+          if (count % 6 === 0) {
             row = document.createElement('tr')
             tbody.appendChild(row)
           }
@@ -127,11 +129,11 @@ const MergeMultipleFiles = props => {
           row.appendChild(td)
           count++
         })
-        // console.log('Passed', passed)
-        // console.log('skipped', skipped)
-        // console.log('retried', retried)
-        // console.log('failed', failed)
-        // console.log('Time', time)
+        console.log('Passed', passed)
+        console.log('skipped', skipped)
+        console.log('retried', retried)
+        console.log('failed', failed)
+        console.log('Time', time)
 
         table.appendChild(tbody)
         const tableHTML = table.outerHTML
@@ -154,7 +156,32 @@ const MergeMultipleFiles = props => {
             element.parentNode.removeChild(element)
           })
         })
-
+        const tables = tempDiv.querySelectorAll('table')
+        tables.forEach(table => {
+          const rows = table.querySelectorAll('tr')
+          if (rows.length === 3) {
+            const headerRow = rows[0]
+            const suiteRow = rows[1]
+            const dataRow = rows[2]
+            if (
+              headerRow.cells.length === 8 &&
+              headerRow.cells[0].textContent === 'Test' &&
+              headerRow.cells[1].textContent === '# Passed' &&
+              headerRow.cells[2].textContent === '# Skipped' &&
+              headerRow.cells[3].textContent === '# Retried' &&
+              headerRow.cells[4].textContent === '# Failed' &&
+              headerRow.cells[5].textContent === 'Time (ms)' &&
+              headerRow.cells[6].textContent === 'Included Groups' &&
+              headerRow.cells[7].textContent === 'Excluded Groups' &&
+              suiteRow.cells.length === 1 &&
+              suiteRow.cells[0].colSpan === 8 &&
+              dataRow.cells.length === 8
+            ) {
+              // Remove the table
+              table.remove()
+            }
+          }
+        })
         finalHTML = removeLineWithNoClassOrId(tempDiv.innerHTML)
       } else {
         finalHTML = combinedContent
