@@ -28,7 +28,7 @@ function MyDropzone ({ onDataChange }) {
       <input {...getInputProps()} />
       {files.length === 0 ? (
         <p className={style.Input}>
-          Drag 'n' drop some files here, or click to upload.
+          Drag 'n' drop some .html files here, or click to upload.
         </p>
       ) : (
         <p style={{ display: 'none' }}>

@@ -190,7 +190,7 @@ const MergeMultipleFiles = props => {
       const blob = new Blob([finalHTML], { type: 'text/html' })
       const downloadLink = document.createElement('a')
       downloadLink.href = URL.createObjectURL(blob)
-      downloadLink.download = 'combined-file.html'
+      downloadLink.download = 'Final-Report.html'
       document.body.appendChild(downloadLink)
       downloadLink.click()
       document.body.removeChild(downloadLink)
