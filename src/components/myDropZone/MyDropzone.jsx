@@ -20,7 +20,7 @@ function MyDropzone ({ onDataChange }) {
     [onDataChange]
   )
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
   return (
     <div {...getRootProps()} className={style.dropzone}>
