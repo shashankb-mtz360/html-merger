@@ -28,7 +28,11 @@ const MergeMultipleFiles = props => {
         const rowData = row.textContent
         if (
           rowData.includes('Regression Test — failed') ||
-          rowData.includes('Regression Test — retried')
+          rowData.includes('Regression Test— retried') ||
+          rowData.includes('Sequential Tests — passed') ||
+          rowData.includes('Sequential Tests — retried') ||
+          rowData.includes('Sequential Tests — failed')
+          
         ) {
           row.parentNode.removeChild(row)
         }
@@ -44,9 +48,9 @@ const MergeMultipleFiles = props => {
       const fileContents = await Promise.all(files.map(readFile))
       let combinedContent = fileContents.join('\n')
 
-      // Replace color red to white
-      combinedContent = combinedContent.replace(/#F33/g, '#FFFF')
-      combinedContent = combinedContent.replace(/#D00/g, '#FFFF')
+      // Replace color for failed red to white
+      combinedContent = combinedContent.replace(/#F33/g, '#3F3')
+      combinedContent = combinedContent.replace(/#D00/g, '#3F3')
       // till this line comment  red to white
 
       const parser = new DOMParser()
@@ -147,8 +151,8 @@ const MergeMultipleFiles = props => {
         const classesToRemove = [
           //logic to remove failed and retried
           'stacktrace',
-          'failedeven',
-          'failedodd',
+          // 'failedeven',
+          // 'failedodd',
           'retriedodd',
           'retriedeven',
           'result',
