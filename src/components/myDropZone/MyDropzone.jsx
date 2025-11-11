@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import Image from 'react'
 import logo from '../../assets/download.png'
 import add from '../../assets/add.png'
 import style from './MyDropZone.module.css'

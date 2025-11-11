@@ -1,4 +1,3 @@
-import React from 'react'
 import style from './MergeMutipleFiles.module.css'
 
 const MergeMultipleFiles = props => {
